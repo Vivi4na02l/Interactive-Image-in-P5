@@ -6,3 +6,19 @@ html, body {
 canvas {
   display: block;
 }
+
+.dflex {
+  display: flex;
+} .dif {
+  display: inline-flex;
+}
+
+.fdc {
+  flex-direction: column;
+}
+
+.jcc {
+  justify-content: center;
+} .aic {
+  align-items: center;
+}

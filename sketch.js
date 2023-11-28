@@ -1,5 +1,16 @@
+body()
+window.addEventListener("resize", body)
+
+function body() {
+    let H = window.innerHeight
+
+    let divBackground = document.querySelector('#divBackground')
+    divBackground.style.height = H + 'px'
+}
+
 function setup() {
-  createCanvas(400, 400);
+  let canvas = createCanvas(600, 600);
+  canvas.parent("divBackground");
 }
 
 function draw() {
