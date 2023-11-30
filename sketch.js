@@ -12,21 +12,61 @@ function setup() {
   let canvasW = window.innerWidth*0.8
   let canvasH = (window.innerWidth*0.8)/1.7777
   let canvas = createCanvas(canvasW, canvasH);
-  
   canvas.parent("divBackground");
 }
 
+// variáveis
+let speedRail = (window.innerWidth*0.8)/5;
+let posRail = 0;
+
 function draw() {
   background('#68c0d6');
-  
-  // line(width/2,
-  //     10,
-  //     width/2,
-  //     100)
 
-  
+  riverDraw();
+  handrail();
+  carDraw();
 
+  // frameRate(10);
+}
+
+// função que cria o rio
+function riverDraw() {
+  noStroke();
+  fill('#2c7aaa');
+  rect(0, height*0.65, width, height*0.35);
+}
+
+// função que cria o corrimão
+function handrail() {
+  noStroke();
+  fill('#373a37');
+
+  for (let i = 0; i < 5; i++) {
+    pos = i * width/5;
+
+    beginShape();
+
+    vertex(pos, height*0.8);
+    vertex(pos+width/5.5, height*0.8);
+    vertex(pos+width/5.5, height*0.78);
+    vertex(pos+width/5, height*0.78);
+    vertex(pos+width/5, height);
+  
+    vertex(pos+width/5.5, height);
+    vertex(pos+width/5.5, height*0.83);
+    vertex(pos, height*0.83);
+    
+    endShape();
+  }
+
+  posRail = posRail + speedRail;
+
+}
+
+// função que desenha a forma da janela do carro
+function carDraw() {
   // Janela do carro
+  stroke('#000');
   fill('#000'); // Cor da janela
   beginShape();
   vertex(0, 0); // A
