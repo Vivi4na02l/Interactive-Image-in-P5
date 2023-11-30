@@ -17,8 +17,6 @@ function setup() {
 }
 
 function draw() {
-  // let canvasW = window.innerWidth*0.8
-  // let canvasH = (window.innerWidth*0.8)/1.7777
   background('#68c0d6');
   
   // line(width/2,
