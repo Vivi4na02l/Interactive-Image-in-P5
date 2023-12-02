@@ -26,6 +26,7 @@ function draw() {
   clear();
   background('#68c0d6');
 
+  building1();
   wall();
   riverDraw();
   handrail();
@@ -60,7 +61,7 @@ function wall() {
     vertex(pos+width/5.5, height*0.45);
     vertex(pos+width/5.5, height*0.42);
     vertex(pos+width/5, height*0.42);
-    vertex(pos+width/5, height*0.65); // altura final do muro = altura inicial do rio
+    vertex(pos+width/5, height*0.65); // altura final do muro = altura inicial do "chão" do muro
     vertex(pos+width/5.5, height*0.65);
     vertex(pos+width/5.5, height*0.48);
     vertex(pos, height*0.48);
@@ -75,7 +76,7 @@ function wall() {
     vertex(pos, height*0.48);
     vertex(pos+width/5.45, height*0.48);
     vertex(pos+width/5.45, height*0.65);
-    vertex(pos, height*0.65); // altura final do muro = altura inicial do rio
+    vertex(pos, height*0.65); // altura final do muro = altura inicial do "chão" do muro
 
     endShape();
   }
@@ -84,6 +85,51 @@ function wall() {
     posWall = 0;
   } else {
     posWall = posWall + speedWall;
+  }
+}
+
+function building1() {
+  noStroke();
+
+  let posX = 0;
+  let posY = height*0.2;
+  let buildingWidth = width*0.3;
+  let buildingHeight = width*0.2;
+
+  //* Prédio */
+  fill('#808080');
+  rect(posX, posY,
+      buildingWidth, buildingHeight);
+
+  
+  //* Janelas */
+  strokeWeight(2);
+  stroke('#231b0e');
+  fill('#373b4f');
+  // rect(posX, posY*1.10, buildingWidth*0.1, buildingHeight*0.1);
+  
+  drawWindows(posX, posY*1.15, buildingWidth*0.1, buildingHeight*0.1, 4, 6);
+
+  
+  function drawWindows(x, y, wW, wH, nbrFloors, nbrWindows) {
+    //* "for" para cada linha de janelas */
+    for (let i = 0; i < nbrFloors; i++) {
+      if (i != 0) {
+        y += wH + wH*0.6 // define a distância vertical entre as janelas
+      }
+
+      //* "for" para cada janela individual */
+      for (let j = 0; j < nbrWindows; j++) {
+        if (j == 0) {
+          x = 0 // reseta a distância inicial por cada loop de "j"
+          x += wW*0.3 // define a distância inicial da janela à borda do prédio
+        } else {
+          x += wW + wH*0.9 // define a distância horizontal entre as janelas
+        }
+
+        rect(x, y, wW, wH);
+      }
+    }
   }
 }
 
