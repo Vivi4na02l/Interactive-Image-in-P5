@@ -16,17 +16,35 @@ function setup() {
 }
 
 // variáveis
-let speedRail = (window.innerWidth*0.8)/5;
+let speedRail = (window.innerWidth*0.8)/10; // /5
 let posRail = 0;
 
 function draw() {
+  clear();
   background('#68c0d6');
 
+  wall();
   riverDraw();
   handrail();
   carDraw();
 
-  // frameRate(10);
+  frameRate(10);
+}
+
+function wall() {
+  let pos = 0;
+  noStroke();
+  fill('#443535');
+  beginShape();
+
+  vertex(pos, height*0.45); // posRail+
+  vertex(pos+width/5.5, height*0.45);
+  vertex(pos+width/5.5, height*0.42);
+  vertex(pos+width/5, height*0.42);
+  vertex(pos+width/5, height*0.65); // altura final do muro = altura inicial do rio
+  
+
+  endShape();
 }
 
 // função que cria o rio
@@ -41,26 +59,29 @@ function handrail() {
   noStroke();
   fill('#373a37');
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 6; i++) {
     pos = i * width/5;
 
     beginShape();
 
-    vertex(pos, height*0.8);
-    vertex(pos+width/5.5, height*0.8);
-    vertex(pos+width/5.5, height*0.78);
-    vertex(pos+width/5, height*0.78);
-    vertex(pos+width/5, height);
+    vertex(posRail+pos, height*0.8); // posRail+
+    vertex(posRail+pos+width/5.5, height*0.8);
+    vertex(posRail+pos+width/5.5, height*0.78);
+    vertex(posRail+pos+width/5, height*0.78);
+    vertex(posRail+pos+width/5, height);
   
-    vertex(pos+width/5.5, height);
-    vertex(pos+width/5.5, height*0.83);
-    vertex(pos, height*0.83);
+    vertex(posRail+pos+width/5.5, height);
+    vertex(posRail+pos+width/5.5, height*0.83);
+    vertex(posRail+pos, height*0.83);
     
     endShape();
   }
 
-  posRail = posRail + speedRail;
-
+  if (posRail >= width/10) {
+    posRail = 0;
+  } else {
+    posRail = posRail + speedRail;
+  }
 }
 
 // função que desenha a forma da janela do carro
