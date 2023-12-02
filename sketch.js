@@ -1,9 +1,9 @@
 body()
 function body() {
-    let H = window.innerHeight
+  let H = window.innerHeight
 
-    let divBackground = document.querySelector('#divBackground')
-    divBackground.style.height = H + 'px'
+  let divBackground = document.querySelector('#divBackground')
+  divBackground.style.height = H + 'px'
 }
 
 // window.addEventListener("resize", changedWindowSize)
@@ -19,6 +19,9 @@ function setup() {
 let speedRail = (window.innerWidth*0.8)/10; // /5
 let posRail = 0;
 
+let speedWall = (window.innerWidth*0.8)/25;
+let posWall = 0;
+
 function draw() {
   clear();
   background('#68c0d6');
@@ -32,26 +35,63 @@ function draw() {
 }
 
 function wall() {
-  let pos = 0;
   noStroke();
-  fill('#443535');
+
+  //* "Chão" do muro */
+  fill('#38372d');
   beginShape();
 
-  vertex(pos, height*0.45); // posRail+
-  vertex(pos+width/5.5, height*0.45);
-  vertex(pos+width/5.5, height*0.42);
-  vertex(pos+width/5, height*0.42);
-  vertex(pos+width/5, height*0.65); // altura final do muro = altura inicial do rio
-  
+  vertex(0, height*0.645);
+  vertex(width, height*0.645); /* width aqui está completa pois o "chão" do muro é sempre igual mesmo em movimento */ 
+  vertex(width, height*0.7); // altura final do muro = altura inicial do rio
+  vertex(0, height*0.7);
 
   endShape();
+
+
+  for (let i = 0; i < 6; i++) {
+    pos = i * width/5;
+      
+    //* "Moldura" do muro */
+    fill('#424135');
+    beginShape();
+
+    vertex(posWall+pos, height*0.45); // posWall+
+    vertex(posWall+pos+width/5.5, height*0.45);
+    vertex(posWall+pos+width/5.5, height*0.42);
+    vertex(posWall+pos+width/5, height*0.42);
+    vertex(posWall+pos+width/5, height*0.65); // altura final do muro = altura inicial do rio
+    vertex(posWall+pos+width/5.5, height*0.65);
+    vertex(posWall+pos+width/5.5, height*0.48);
+    vertex(posWall+pos, height*0.48);
+
+    endShape();
+
+
+    //* Interior do muro */  
+    fill('#293326');
+    beginShape();
+
+    vertex(posWall+pos, height*0.48);
+    vertex(posWall+pos+width/5.45, height*0.48);
+    vertex(posWall+pos+width/5.45, height*0.65);
+    vertex(posWall+pos, height*0.65); // altura final do muro = altura inicial do rio
+
+    endShape();
+  }
+
+  if (posWall >= width) {
+    posWall = 0;
+  } else {
+    posWall = posWall + speedWall;
+  }
 }
 
 // função que cria o rio
 function riverDraw() {
   noStroke();
   fill('#2c7aaa');
-  rect(0, height*0.65, width, height*0.35);
+  rect(0, height*0.7, width, height*0.35);
 }
 
 // função que cria o corrimão
@@ -77,7 +117,7 @@ function handrail() {
     endShape();
   }
 
-  if (posRail >= width/10) {
+  if (posRail >= width) {
     posRail = 0;
   } else {
     posRail = posRail + speedRail;
