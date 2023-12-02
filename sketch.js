@@ -91,7 +91,11 @@ function wall() {
 function building1() {
   noStroke();
 
-  let posX = 0;
+  //* Faz o prédio mexer */
+  let buildingSpeed = (window.innerWidth * 0.8) / 100;
+  let posX = frameCount * buildingSpeed;
+  // let posX = 0;
+
   let posY = height*0.2;
   let buildingWidth = width*0.3;
   let buildingHeight = width*0.2;
@@ -127,12 +131,17 @@ function building1() {
   strokeWeight(2);
   stroke('#231b0e');
   fill('#373b4f');
-  // rect(posX, posY*1.10, buildingWidth*0.1, buildingHeight*0.1);
-  
-  drawWindows(posX, posY*1.15, buildingWidth*0.1, buildingHeight*0.1, 4, 6);
 
-  
-  function drawWindows(x, y, wW, wH, nbrFloors, nbrWindows) {
+  drawWindows(posX, posY*1.15, buildingWidth*0.1, buildingHeight*0.1, 4, 6);
+    
+  // let x = posX
+  // let y = posY*1.15
+  // let wW = buildingWidth*0.1
+  // let wH = buildingHeight*0.1
+  // let nbrFloors = 4
+  // let nbrWindows = 6
+
+  function drawWindows(posX, y, wW, wH, nbrFloors, nbrWindows) {
     //* "for" para cada linha de janelas */
     for (let i = 0; i < nbrFloors; i++) {
       if (i != 0) {
@@ -142,7 +151,7 @@ function building1() {
       //* "for" para cada janela individual */
       for (let j = 0; j < nbrWindows; j++) {
         if (j == 0) {
-          x = 0 // reseta a distância inicial por cada loop de "j"
+          x = posX + wW*0.2 // reseta a distância inicial por cada loop de "j"
           x += wW*0.3 // define a distância inicial da janela à borda do prédio
         } else {
           x += wW + wH*0.9 // define a distância horizontal entre as janelas
