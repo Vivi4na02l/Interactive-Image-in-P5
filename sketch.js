@@ -19,7 +19,7 @@ function setup() {
 let speedRail = (window.innerWidth*0.8)/10; // /5
 let posRail = 0;
 
-let speedWall = (window.innerWidth*0.8)/25;
+let speedWall = (window.innerWidth*0.8)/35;
 let posWall = 0;
 
 function draw() {
@@ -31,7 +31,7 @@ function draw() {
   handrail();
   carDraw();
 
-  frameRate(10);
+  frameRate(15);
 }
 
 function wall() {
@@ -49,21 +49,21 @@ function wall() {
   endShape();
 
 
-  for (let i = 0; i < 6; i++) {
-    pos = i * width/5;
+  for (let i = -1; i < 6; i++) {
+    pos = (i * width) / 5 + posWall;
       
     //* "Moldura" do muro */
     fill('#424135');
     beginShape();
 
-    vertex(posWall+pos, height*0.45); // posWall+
-    vertex(posWall+pos+width/5.5, height*0.45);
-    vertex(posWall+pos+width/5.5, height*0.42);
-    vertex(posWall+pos+width/5, height*0.42);
-    vertex(posWall+pos+width/5, height*0.65); // altura final do muro = altura inicial do rio
-    vertex(posWall+pos+width/5.5, height*0.65);
-    vertex(posWall+pos+width/5.5, height*0.48);
-    vertex(posWall+pos, height*0.48);
+    vertex(pos, height*0.45); // 
+    vertex(pos+width/5.5, height*0.45);
+    vertex(pos+width/5.5, height*0.42);
+    vertex(pos+width/5, height*0.42);
+    vertex(pos+width/5, height*0.65); // altura final do muro = altura inicial do rio
+    vertex(pos+width/5.5, height*0.65);
+    vertex(pos+width/5.5, height*0.48);
+    vertex(pos, height*0.48);
 
     endShape();
 
@@ -72,15 +72,15 @@ function wall() {
     fill('#293326');
     beginShape();
 
-    vertex(posWall+pos, height*0.48);
-    vertex(posWall+pos+width/5.45, height*0.48);
-    vertex(posWall+pos+width/5.45, height*0.65);
-    vertex(posWall+pos, height*0.65); // altura final do muro = altura inicial do rio
+    vertex(pos, height*0.48);
+    vertex(pos+width/5.45, height*0.48);
+    vertex(pos+width/5.45, height*0.65);
+    vertex(pos, height*0.65); // altura final do muro = altura inicial do rio
 
     endShape();
   }
 
-  if (posWall >= width) {
+  if (posWall >= width / 10) {
     posWall = 0;
   } else {
     posWall = posWall + speedWall;
@@ -99,25 +99,25 @@ function handrail() {
   noStroke();
   fill('#373a37');
 
-  for (let i = 0; i < 6; i++) {
-    pos = i * width/5;
+  for (let i = -1; i < 6; i++) {
+    pos = (i * width) / 5 + posRail;
 
     beginShape();
 
-    vertex(posRail+pos, height*0.8); // posRail+
-    vertex(posRail+pos+width/5.5, height*0.8);
-    vertex(posRail+pos+width/5.5, height*0.78);
-    vertex(posRail+pos+width/5, height*0.78);
-    vertex(posRail+pos+width/5, height);
+    vertex(pos, height*0.8); 
+    vertex(pos+width/5.5, height*0.8);
+    vertex(pos+width/5.5, height*0.78);
+    vertex(pos+width/5, height*0.78);
+    vertex(pos+width/5, height);
   
-    vertex(posRail+pos+width/5.5, height);
-    vertex(posRail+pos+width/5.5, height*0.83);
-    vertex(posRail+pos, height*0.83);
+    vertex(pos+width/5.5, height);
+    vertex(pos+width/5.5, height*0.83);
+    vertex(pos, height*0.83);
     
     endShape();
   }
 
-  if (posRail >= width) {
+  if (posRail >= width / 5) {
     posRail = 0;
   } else {
     posRail = posRail + speedRail;
