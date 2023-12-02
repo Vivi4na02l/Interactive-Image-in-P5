@@ -96,6 +96,27 @@ function building1() {
   let buildingWidth = width*0.3;
   let buildingHeight = width*0.2;
 
+  //* Telhado */
+  fill('#231b0e');
+
+  beginShape();
+
+  vertex(posX, posY-height*0.01);
+  vertex(posX+buildingWidth/4, posY-height*0.01);
+  vertex(posX+buildingWidth/4, posY-height*0.02);
+  vertex(posX+buildingWidth/2, posY-height*0.02);
+  vertex(posX+buildingWidth/2, posY-height*0.01);
+  vertex(posX+buildingWidth*0.85, posY-height*0.01);
+  vertex(posX+buildingWidth*0.85, posY-height*0.02);
+  vertex(posX+buildingWidth*0.9, posY-height*0.02);
+  vertex(posX+buildingWidth*0.9, posY-height*0.01);
+  vertex(posX+buildingWidth, posY-height*0.01);
+  vertex(posX+buildingWidth, posY);
+  vertex(posX, posY);
+
+  endShape();
+
+
   //* Prédio */
   fill('#808080');
   rect(posX, posY,
