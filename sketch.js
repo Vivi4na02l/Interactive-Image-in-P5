@@ -15,7 +15,7 @@ function setup() {
   canvas.parent("divBackground");
 }
 
-// variáveis
+//* Variáveis */
 let speedRail = (window.innerWidth*0.8)/10; // /5
 let posRail = 0;
 
@@ -28,10 +28,14 @@ let posB1 = 0;
 let speedB2 = (window.innerWidth * 0.8) / 130;
 let posB2 = 0;
 
+let speedB3 = (window.innerWidth * 0.8) / 180;
+let posB3 = 0;
+
 function draw() {
   clear();
   background('#68c0d6');
 
+  building3();
   building2();
   building1();
   wall();
@@ -92,6 +96,41 @@ function wall() {
     posWall = 0;
   } else {
     posWall = posWall + speedWall;
+  }
+}
+
+function building3() {
+  noStroke();
+
+  let buildingWidth = width*0.2;
+  let buildingHeight = width*0.3;
+
+  //* Faz o prédio mexer ou parar */
+  if (posB3 < width) {
+    posB3 = frameCount * speedB3;
+  }
+
+  //* Prédio */
+  fill('#dddddd');
+  rect(posB3, 0,
+      buildingWidth, buildingHeight);
+
+  //* Janelas */
+  fill('#434860');
+
+  drawWindows(posB3, buildingHeight*0.15, buildingWidth*0.13, buildingHeight*0.9, 4);
+  function drawWindows(posX, y, wW, wH, nbrWindows) {
+  //* "for" para cada janela individual */
+    for (let j = 0; j < nbrWindows; j++) {
+      if (j == 0) {
+        x = posX + wW*0.2 // reseta a distância inicial por cada loop de "j"
+        x += wW*0.5 // define a distância inicial da janela à borda do prédio
+      } else {
+        x += wW + wW*0.7 // define a distância horizontal entre as janelas
+      }
+
+      rect(x, y, wW, wH);
+    }
   }
 }
 
