@@ -31,12 +31,16 @@ let posB2 = 0;
 let speedB3 = (window.innerWidth * 0.8) / 180;
 let posB3 = 0;
 
+let speedB4 = (window.innerWidth * 0.8) / 150;
+let posB4 = 0;
+
 function draw() {
   clear();
   background('#68c0d6');
 
   building3();
   building2();
+  building4();
   building1();
   wall();
   riverDraw();
@@ -96,6 +100,56 @@ function wall() {
     posWall = 0;
   } else {
     posWall = posWall + speedWall;
+  }
+}
+
+function building4() {
+  let posY = height*0.15;
+  let buildingWidth = width*0.15;
+  let buildingHeight = width*0.2;
+
+  //* Faz o prédio mexer ou parar */
+  if (posB4 < width) {
+    posB4 = frameCount * speedB4;  
+  }
+
+  //* Prédio */
+  strokeWeight(4);
+  stroke('#3d4366');
+  fill('#dadce8');
+  rect(posB4, posY,
+      buildingWidth, buildingHeight);
+
+  //* Parte do meio */
+  noStroke();
+  fill('#3d4366');
+  rect(posB4+buildingWidth/2-(buildingWidth/4)/2, posY*0.8,
+      buildingWidth/4, buildingHeight);
+
+  //* Janelas */
+  strokeWeight(1);
+  stroke('#000');
+  drawWindows(posB4, posY*1.2, buildingWidth*0.12, buildingHeight*0.1, 4, 2, buildingWidth);
+  function drawWindows(posX, y, wW, wH, nbrFloors, nbrWindows, buildingWidth) {
+    //* "for" para cada linha de janelas */
+    for (let i = 0; i < nbrFloors; i++) {
+      if (i != 0) {
+        y += wH + wH*1.1 // define a distância vertical entre as janelas
+      }
+
+      //* "for" para cada janela individual */
+      for (let j = 0; j < nbrWindows; j++) {
+        if (j == 0) {
+          x = posX + wW*0.2 // reseta a distância inicial por cada loop de "j"
+          x += buildingWidth*0.05 // define a distância inicial da janela à borda do prédio
+        } else {
+          x += buildingWidth*0.62 // define a distância horizontal entre as janelas
+        }
+
+        rect(x, y, wW, wH);
+        rect(x+wW, y, wW, wH);
+      }
+    }
   }
 }
 
