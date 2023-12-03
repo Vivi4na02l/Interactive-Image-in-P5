@@ -25,15 +25,15 @@ let posWall = 0;
 let speedB1 = (window.innerWidth * 0.8) / 100;
 let posB1 = 0;
 
-let speedB2 = (window.innerWidth * 0.8) / 120;
+let speedB2 = (window.innerWidth * 0.8) / 130;
 let posB2 = 0;
 
 function draw() {
   clear();
   background('#68c0d6');
 
-  building1();
   building2();
+  building1();
   wall();
   riverDraw();
   handrail();
@@ -100,6 +100,11 @@ function building2() {
 
   let buildingWidth = width*0.15;
   let buildingHeight = width*0.3;
+
+  //* Faz o prédio mexer ou parar */
+  if (posB2 < width) {
+    posB2 = frameCount * speedB2;  
+  }
 
   //* Prédio */
   fill('#b7b5a1');
