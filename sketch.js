@@ -22,11 +22,18 @@ let posRail = 0;
 let speedWall = (window.innerWidth*0.8)/35;
 let posWall = 0;
 
+let speedB1 = (window.innerWidth * 0.8) / 100;
+let posB1 = 0;
+
+let speedB2 = (window.innerWidth * 0.8) / 120;
+let posB2 = 0;
+
 function draw() {
   clear();
   background('#68c0d6');
 
   building1();
+  building2();
   wall();
   riverDraw();
   handrail();
@@ -88,12 +95,53 @@ function wall() {
   }
 }
 
+function building2() {
+  noStroke();
+
+  let buildingWidth = width*0.15;
+  let buildingHeight = width*0.3;
+
+  //* Prédio */
+  fill('#b7b5a1');
+  rect(posB2, 0,
+      buildingWidth, buildingHeight);
+
+  //* Janelas */
+  strokeWeight(2);
+  stroke('#231b0e');
+  fill('#373b4f');
+
+  drawWindows(posB2, buildingHeight*0.15, buildingWidth*0.1, buildingHeight*0.1, 5, 4);
+  function drawWindows(posX, y, wW, wH, nbrFloors, nbrWindows) {
+    //* "for" para cada linha de janelas */
+    for (let i = 0; i < nbrFloors; i++) {
+      if (i != 0) {
+        y += wH + wH*0.6 // define a distância vertical entre as janelas
+      }
+
+      //* "for" para cada janela individual */
+      for (let j = 0; j < nbrWindows; j++) {
+        if (j == 0) {
+          x = posX + wW*0.2 // reseta a distância inicial por cada loop de "j"
+          x += wW*0.6 // define a distância inicial da janela à borda do prédio
+        } else {
+          x += wW + wH*0.7 // define a distância horizontal entre as janelas
+        }
+
+        rect(x, y, wW, wH);
+      }
+    }
+  }
+}
+
 function building1() {
   noStroke();
 
-  //* Faz o prédio mexer */
-  let buildingSpeed = (window.innerWidth * 0.8) / 100;
-  let posX = frameCount * buildingSpeed;
+  //* Faz o prédio mexer ou parar */
+  if (posB1 < width) {
+    posB1 = frameCount * speedB1;  
+  }
+  
   // let posX = 0;
 
   let posY = height*0.2;
@@ -105,25 +153,25 @@ function building1() {
 
   beginShape();
 
-  vertex(posX, posY-height*0.01);
-  vertex(posX+buildingWidth/4, posY-height*0.01);
-  vertex(posX+buildingWidth/4, posY-height*0.02);
-  vertex(posX+buildingWidth/2, posY-height*0.02);
-  vertex(posX+buildingWidth/2, posY-height*0.01);
-  vertex(posX+buildingWidth*0.85, posY-height*0.01);
-  vertex(posX+buildingWidth*0.85, posY-height*0.02);
-  vertex(posX+buildingWidth*0.9, posY-height*0.02);
-  vertex(posX+buildingWidth*0.9, posY-height*0.01);
-  vertex(posX+buildingWidth, posY-height*0.01);
-  vertex(posX+buildingWidth, posY);
-  vertex(posX, posY);
+  vertex(posB1, posY-height*0.01);
+  vertex(posB1+buildingWidth/4, posY-height*0.01);
+  vertex(posB1+buildingWidth/4, posY-height*0.02);
+  vertex(posB1+buildingWidth/2, posY-height*0.02);
+  vertex(posB1+buildingWidth/2, posY-height*0.01);
+  vertex(posB1+buildingWidth*0.85, posY-height*0.01);
+  vertex(posB1+buildingWidth*0.85, posY-height*0.02);
+  vertex(posB1+buildingWidth*0.9, posY-height*0.02);
+  vertex(posB1+buildingWidth*0.9, posY-height*0.01);
+  vertex(posB1+buildingWidth, posY-height*0.01);
+  vertex(posB1+buildingWidth, posY);
+  vertex(posB1, posY);
 
   endShape();
 
 
   //* Prédio */
   fill('#808080');
-  rect(posX, posY,
+  rect(posB1, posY,
       buildingWidth, buildingHeight);
 
   
@@ -132,15 +180,7 @@ function building1() {
   stroke('#231b0e');
   fill('#373b4f');
 
-  drawWindows(posX, posY*1.15, buildingWidth*0.1, buildingHeight*0.1, 4, 6);
-    
-  // let x = posX
-  // let y = posY*1.15
-  // let wW = buildingWidth*0.1
-  // let wH = buildingHeight*0.1
-  // let nbrFloors = 4
-  // let nbrWindows = 6
-
+  drawWindows(posB1, posY*1.15, buildingWidth*0.1, buildingHeight*0.1, 4, 6);
   function drawWindows(posX, y, wW, wH, nbrFloors, nbrWindows) {
     //* "for" para cada linha de janelas */
     for (let i = 0; i < nbrFloors; i++) {
