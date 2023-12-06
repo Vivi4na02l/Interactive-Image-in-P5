@@ -105,16 +105,16 @@ function draw() {
   background('#68c0d6');
 
   // Desenha um prédio aleatório e atualiza sua posição
-  if (randomBuilding == 3 && posB1 < (width+width*0.2)) {
+  if (randomBuilding == 3 && posB3 < (width+width*0.2)) {
     building3();
     posB3 += speedB3;
-  } else if (randomBuilding == 2 && posB2 < (width*width*0.15)) {
+  } else if (randomBuilding == 2 && posB2 < (width+width*0.15)) {
     building2();
     posB2 += speedB2;
-  } else if (randomBuilding == 4 && posB3 < (width+width*0.15)) {
+  } else if (randomBuilding == 4 && posB4 < (width+width*0.15)) {
     building4();
     posB4 += speedB4;
-  } else if (randomBuilding == 1 && posB4 < (width+width*0.3)) {
+  } else if (randomBuilding == 1 && posB1 < (width+width*0.3)) {
     building1();
     posB1 += speedB1;
   } else {
