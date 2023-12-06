@@ -107,16 +107,16 @@ function draw() {
   // Desenha um prédio aleatório e atualiza sua posição
   if (randomBuilding == 3 && posB1 < (width+width*0.2)) {
     building3();
-    posB1 += speedB1;
+    posB3 += speedB3;
   } else if (randomBuilding == 2 && posB2 < (width*width*0.15)) {
     building2();
     posB2 += speedB2;
   } else if (randomBuilding == 4 && posB3 < (width+width*0.15)) {
     building4();
-    posB3 += speedB3;
+    posB4 += speedB4;
   } else if (randomBuilding == 1 && posB4 < (width+width*0.3)) {
     building1();
-    posB4 += speedB4;
+    posB1 += speedB1;
   } else {
     // Se o prédio atingir o final do canvas, escolhe um novo prédio aleatório
     posB1 = posB2 = posB3 = posB4 = 0;
