@@ -16,9 +16,9 @@ function setup() {
 }
 
 //* Variáveis */
-let randomBuilding = Math.floor(Math.random() * 4) + 1;
-let nbrBuildings = 0;
-let nbrBuildingsArray = [];
+// let nbrBuildings = [1,2,3,4];
+// let randomBuilding = Math.floor(Math.random() * nbrBuildings.length) + 1;
+// nbrBuildings = nbrBuildings.filter(nbr => nbr != randomBuilding);
 
 let buildingColors = [
   { //* 1 */
@@ -72,14 +72,30 @@ let buildingColors = [
 ]
 
 let scenarioColors = {
-  daylight: {
+  activeTime: {
     sky: '#68c0d6',
     river: '#2c7aaa',
     wallExterior: '#424135',
     wallInterior: '#293326',
     wallFloor: '#38372d',
     rail: '#373a37',
-  }
+  },
+  dayTime: {
+    sky: '#68c0d6',
+    river: '#2c7aaa',
+    wallExterior: '#424135',
+    wallInterior: '#293326',
+    wallFloor: '#38372d',
+    rail: '#373a37',
+  },
+  nightTime: {
+    sky: '#1e212d',
+    river: '#2c7aaa',
+    wallExterior: '#424135',
+    wallInterior: '#293326',
+    wallFloor: '#38372d',
+    rail: '#373a37',
+  },
 }
 
 let speedRail = (window.innerWidth*0.8)/10; // /5
@@ -89,51 +105,94 @@ let speedWall = (window.innerWidth*0.8)/35;
 let posWall = 0;
 
 let speedB1 = (window.innerWidth * 0.8) / 100;
-let posB1 = 0;
+let posB1 = -(window.innerWidth * 0.8)*0.3;
 
 let speedB2 = (window.innerWidth * 0.8) / 130;
-let posB2 = 0;
+let posB2 = -(window.innerWidth * 0.8)*0.15;
 
 let speedB3 = (window.innerWidth * 0.8) / 180;
-let posB3 = 0;
+let posB3 = -(window.innerWidth * 0.8)*0.2;
 
 let speedB4 = (window.innerWidth * 0.8) / 150;
-let posB4 = 0;
+let posB4 = -(window.innerWidth * 0.8)*0.15;
+
+let nbrBuildings = 0;
+let buildingsArray = [];
+let totalBuildingsArray = [
+  {
+    building: "building3",
+    width: (window.innerWidth * 0.8)*0.2,
+    pos: posB3,
+    speed: speedB3
+  },
+  {
+    building: "building2",
+    width: (window.innerWidth * 0.8)*0.15,
+    pos: posB2,
+    speed: speedB2
+  },
+  {
+    building: "building4",
+    width: (window.innerWidth * 0.8)*0.15,
+    pos: posB4,
+    speed: speedB4
+  },
+  {
+    building: "building1",
+    width: (window.innerWidth * 0.8)*0.3,
+    pos: posB1,
+    speed: speedB1
+  },
+];
 
 function draw() {
   clear();
-  background('#68c0d6');
+  background(scenarioColors.activeTime.sky);
 
-  // Desenha um prédio aleatório e atualiza sua posição
-  if (randomBuilding == 3 && posB3 < (width+width*0.2)) {
-    building3();
-    posB3 += speedB3;
-  } else if (randomBuilding == 2 && posB2 < (width+width*0.15)) {
-    building2();
-    posB2 += speedB2;
-  } else if (randomBuilding == 4 && posB4 < (width+width*0.15)) {
-    building4();
-    posB4 += speedB4;
-  } else if (randomBuilding == 1 && posB1 < (width+width*0.3)) {
-    building1();
-    posB1 += speedB1;
-  } else {
-    // Se o prédio atingir o final do canvas, escolhe um novo prédio aleatório
-    posB1 = posB2 = posB3 = posB4 = 0;
-    randomBuilding = Math.floor(Math.random() * 4) + 1;
-    console.log('entrei');
+  if (nbrBuildings == 0) {
+    nbrBuildings = Math.floor(Math.random() * (totalBuildingsArray.length - 2)) + 2 /* (max - min) + min */
+
+                        /* número de prédios a tirar do array */
+    for (let i = 0; i < (totalBuildingsArray.length - nbrBuildings); i++) {
+      let radBuilding = Math.floor(Math.random() * totalBuildingsArray.length);
+      buildingsArray = totalBuildingsArray.filter(b => b.building != totalBuildingsArray[radBuilding].building)
+    }
+  }
+  else {
+    for (const bd of buildingsArray) {
+      if (bd.pos < width + bd.width) {
+        drawBuilding(bd);
+      }
+      else {
+        nbrBuildings -= 1;
+        buildingsArray = buildingsArray.filter(b => b.building != bd.building)
+        bd.pos = -width - bd.width /** -bd.width */
+      }
+    }
   }
 
-  // building3();
-  // building2();
-  // building4();
-  // building1();
   wall();
   riverDraw();
   handrail();
   carDraw();
 
   frameRate(15);
+}
+
+function drawBuilding(bd) {
+  if (bd.building == "building3") {
+    bd.pos += bd.speed;
+    building3(bd.pos);
+  } else if (bd.building == "building2") {
+    bd.pos += bd.speed;
+    building2(bd.pos);
+  } else if (bd.building == "building4") {
+    bd.pos += bd.speed;
+    building4(bd.pos);
+  } else if (bd.building == "building1") {
+    bd.pos += bd.speed;
+    building1(bd.pos);
+  }
 }
 
 function wall() {
@@ -189,7 +248,7 @@ function wall() {
   }
 }
 
-function building4() {
+function building4(posB4) {
   let posY = height*0.15;
   let buildingWidth = width*0.15;
   let buildingHeight = width*0.2;
@@ -239,7 +298,7 @@ function building4() {
   }
 }
 
-function building3() {
+function building3(posB3) {
   noStroke();
 
   let buildingWidth = width*0.2;
@@ -274,7 +333,7 @@ function building3() {
   }
 }
 
-function building2() {
+function building2(posB2) {
   noStroke();
 
   let buildingWidth = width*0.15;
@@ -318,7 +377,7 @@ function building2() {
   }
 }
 
-function building1() {
+function building1(posB1) {
   noStroke();
 
   //* Faz o prédio mexer ou parar */
@@ -390,14 +449,14 @@ function building1() {
 // função que cria o rio
 function riverDraw() {
   noStroke();
-  fill('#2c7aaa');
+  fill(scenarioColors.activeTime.river);
   rect(0, height*0.7, width, height*0.35);
 }
 
 // função que cria o corrimão
 function handrail() {
   noStroke();
-  fill('#373a37');
+  fill(scenarioColors.activeTime.rail);
 
   for (let i = -1; i < 6; i++) {
     pos = (i * width) / 5 + posRail;
