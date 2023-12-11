@@ -74,7 +74,7 @@ let buildingColors = [
 let scenarioColors = {
   activeTime: {
     sky: '#68c0d6',
-    river: '#2c7aaa',
+    road: '#606060',
     wallExterior: '#424135',
     wallInterior: '#293326',
     wallFloor: '#38372d',
@@ -82,7 +82,7 @@ let scenarioColors = {
   },
   dayTime: {
     sky: '#68c0d6',
-    river: '#2c7aaa',
+    road: '#606060',
     wallExterior: '#424135',
     wallInterior: '#293326',
     wallFloor: '#38372d',
@@ -90,7 +90,7 @@ let scenarioColors = {
   },
   nightTime: {
     sky: '#1e212d',
-    river: '#2c7aaa',
+    road: '#2c7aaa',
     wallExterior: '#424135',
     wallInterior: '#293326',
     wallFloor: '#38372d',
@@ -100,6 +100,9 @@ let scenarioColors = {
 
 let speedRail = (window.innerWidth*0.8)/10; // /5
 let posRail = 0;
+
+let speedRoad = (window.innerWidth*0.8)/10;
+let posRoad = -(window.innerWidth*0.8)/3;
 
 let speedWall = (window.innerWidth*0.8)/35;
 let posWall = 0;
@@ -172,8 +175,8 @@ function draw() {
   }
 
   wall();
-  riverDraw();
-  handrail();
+  roadDraw();
+  // handrail();
   carDraw();
 
   frameRate(15);
@@ -253,11 +256,6 @@ function building4(posB4) {
   let buildingWidth = width*0.15;
   let buildingHeight = width*0.2;
 
-  //* Faz o prédio mexer ou parar */
-  // if (posB4 < width) {
-  //   posB4 = frameCount * speedB4;  
-  // }
-
   //* Prédio */
   strokeWeight(4);
   stroke('#3d4366');
@@ -304,11 +302,6 @@ function building3(posB3) {
   let buildingWidth = width*0.2;
   let buildingHeight = width*0.3;
 
-  //* Faz o prédio mexer ou parar */
-  // if (posB3 < width) {
-  //   posB3 = frameCount * speedB3;
-  // }
-
   //* Prédio */
   fill('#dddddd');
   rect(posB3, 0,
@@ -338,11 +331,6 @@ function building2(posB2) {
 
   let buildingWidth = width*0.15;
   let buildingHeight = width*0.3;
-
-  //* Faz o prédio mexer ou parar */
-  // if (posB2 < width) {
-  //   posB2 = frameCount * speedB2;  
-  // }
 
   //* Prédio */
   fill('#b7b5a1');
@@ -446,11 +434,33 @@ function building1(posB1) {
   }
 }
 
-// função que cria o rio
-function riverDraw() {
+// função que cria a estrada
+function roadDraw() {
   noStroke();
-  fill(scenarioColors.activeTime.river);
+  fill(scenarioColors.activeTime.road);
   rect(0, height*0.7, width, height*0.35);
+
+  posRoad += speedRoad;
+
+  // Verifica se o retângulo branco original atingiu um terço da largura do canvas
+  if (posRoad >= width / 3) {
+    // Adiciona um novo retângulo branco
+    fill('#fff');
+    rect(posRoad - width, height*0.85, width * 0.05, height*0.02);
+  }
+
+  // Desenha o retângulo branco original
+  fill('#fff');
+  rect(posRoad, height*0.85, width * 0.05, height*0.02);
+
+  // Verifica se o retângulo original saiu completamente do canvas
+  if (posRoad >= width) {
+    posRoad = 0;
+  }
+}
+
+function cars() {
+  
 }
 
 // função que cria o corrimão
