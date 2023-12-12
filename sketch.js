@@ -3,8 +3,24 @@ function body() {
   let H = window.innerHeight
 
   let divBackground = document.querySelector('#divBackground')
-  divBackground.style.height = H + 'px'
+  divBackground.style.height = H * 0.85 + 'px'
+
+  // let divButtons = document.querySelector('#divButtons')
+  // divButtons.style.height = H * 0.1 + 'px'
 }
+
+let dayTime = true;
+document.querySelector('#btnTime').addEventListener('click', e => {
+  if (dayTime) {
+    document.querySelector('#wTxt').innerHTML = 'Daytime 🌞';
+    scenarioColors.activeTime = scenarioColors.nightTime;
+    dayTime = false;
+  } else {
+    document.querySelector('#wTxt').innerHTML = 'Nighttime 🌙';
+    scenarioColors.activeTime = scenarioColors.dayTime;
+    dayTime = true;
+  }
+})
 
 // window.addEventListener("resize", changedWindowSize)
 
@@ -90,7 +106,7 @@ let scenarioColors = {
   },
   nightTime: {
     sky: '#1e212d',
-    road: '#2c7aaa',
+    road: '#606060',
     wallExterior: '#424135',
     wallInterior: '#293326',
     wallFloor: '#38372d',
@@ -182,8 +198,6 @@ function draw() {
 
   wall();
   roadDraw();
-  // handrail();
-  
   cars();
   carDraw();
 
@@ -535,36 +549,6 @@ function cars() {
           tirestW, tirestW);
   ellipse(posCar+width*0.15, height*0.77, // pnéu direito
           tirestW, tirestW);
-}
-
-// função que cria o corrimão
-function handrail() {
-  noStroke();
-  fill(scenarioColors.activeTime.rail);
-
-  for (let i = -1; i < 6; i++) {
-    pos = (i * width) / 5 + posRail;
-
-    beginShape();
-
-    vertex(pos, height*0.8); 
-    vertex(pos+width/5.5, height*0.8);
-    vertex(pos+width/5.5, height*0.78);
-    vertex(pos+width/5, height*0.78);
-    vertex(pos+width/5, height);
-  
-    vertex(pos+width/5.5, height);
-    vertex(pos+width/5.5, height*0.83);
-    vertex(pos, height*0.83);
-    
-    endShape();
-  }
-
-  if (posRail >= width / 5) {
-    posRail = 0;
-  } else {
-    posRail = posRail + speedRail;
-  }
 }
 
 // função que desenha a forma da janela do carro

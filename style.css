@@ -2,6 +2,7 @@ html, body {
   margin: 0;
   padding: 0;
   background-color: #000;
+  overflow-y: hidden;
 }
 
 canvas {
@@ -24,7 +25,9 @@ canvas {
   align-items: center;
 }
 
-#btnSeason {
+#btnTime {
+  cursor: pointer;
+  
   padding: 2%;
   margin-bottom: 10px;
 
@@ -32,4 +35,7 @@ canvas {
   border-width: 2px;
   border-radius: 20px;
   border-color: #ffd500;
+}
+.wTxt {
+  color: #ffd500;
 }
