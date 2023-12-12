@@ -177,6 +177,8 @@ function draw() {
   wall();
   roadDraw();
   // handrail();
+  
+  cars();
   carDraw();
 
   frameRate(15);
@@ -446,12 +448,12 @@ function roadDraw() {
   if (posRoad >= width / 3) {
     // Adiciona um novo retângulo branco
     fill('#fff');
-    rect(posRoad - width, height*0.85, width * 0.05, height*0.02);
+    rect(posRoad - width, height*0.85, width * 0.2, height*0.02);
   }
 
   // Desenha o retângulo branco original
   fill('#fff');
-  rect(posRoad, height*0.85, width * 0.05, height*0.02);
+  rect(posRoad, height*0.85, width * 0.2, height*0.02);
 
   // Verifica se o retângulo original saiu completamente do canvas
   if (posRoad >= width) {
@@ -460,7 +462,65 @@ function roadDraw() {
 }
 
 function cars() {
+  noStroke();
+
+  //* Carro */
+  fill('#f34');
+  beginShape();
+
+  vertex(0, height*0.7); // A
+  vertex(width*0.05, height*0.7); // B
+  bezierVertex(width*0.05, height*0.7, // B
+              width*0.07, height*0.65,
+              width*0.1, height*0.65); // C
+  bezierVertex(width*0.1, height*0.65, // C
+              width*0.12, height*0.65,
+              width*0.15, height*0.7); // D
+  bezierVertex(width*0.15, height*0.7, // D
+              width*0.22, height*0.72, // E
+              width*0.22, height*0.77); // F
+  vertex(0, height*0.77); // G
+
+  endShape();
+
+
+  //* Vidro */
+  stroke('#77a8ce');
   
+  fill('#92caf4');
+  beginShape();
+
+  vertex(width*0.06, height*0.7);
+  bezierVertex(width*0.06, height*0.7,
+              width*0.08, height*0.66,
+              width*0.095, height*0.66);
+  bezierVertex(width*0.095, height*0.66,
+              width*0.11, height*0.65,
+              width*0.14, height*0.7);
+  vertex(width*0.06, height*0.7);
+
+  endShape();
+
+
+  //* Farol */
+  let headlightW = width*0.02;
+  noStroke();
+
+  fill('#f7da00');
+  ellipse(width*0.22-headlightW, height*0.72+headlightW/2, // = ao ponto E
+          headlightW, headlightW);
+
+  
+  //* Pnéus */
+  let tirestW = width*0.04;
+  stroke('#111');
+  strokeWeight(5);
+
+  fill('#333');
+  ellipse(width*0.05, height*0.77, // pnéu esquerdo
+          tirestW, tirestW);
+  ellipse(width*0.15, height*0.77, // pnéu direito
+          tirestW, tirestW);
 }
 
 // função que cria o corrimão
