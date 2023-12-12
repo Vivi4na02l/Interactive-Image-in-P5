@@ -104,6 +104,12 @@ let posRail = 0;
 let speedRoad = (window.innerWidth*0.8)/10;
 let posRoad = -(window.innerWidth*0.8)/3;
 
+let speedCar = (window.innerWidth*0.8)/6;
+let posCar = -(window.innerWidth*0.8)*0.22;
+let rCar = Math.floor(Math.random() * 255);
+let gCar = Math.floor(Math.random() * 255);
+let bCar = Math.floor(Math.random() * 255);
+
 let speedWall = (window.innerWidth*0.8)/35;
 let posWall = 0;
 
@@ -462,24 +468,32 @@ function roadDraw() {
 }
 
 function cars() {
+  posCar += speedCar;
+  if (posCar > width+(width*0.22)) {
+    rCar = random(255);
+    gCar = random(255);
+    bCar = random(255);
+    posCar = -width*(Math.floor(Math.random() * 15) + 4) //nº random dá ilusão de tempo aleatório entre a aparição de cada carro
+  }
+
   noStroke();
 
   //* Carro */
-  fill('#f34');
+  fill(rCar, gCar, bCar);
   beginShape();
 
-  vertex(0, height*0.7); // A
-  vertex(width*0.05, height*0.7); // B
-  bezierVertex(width*0.05, height*0.7, // B
-              width*0.07, height*0.65,
-              width*0.1, height*0.65); // C
-  bezierVertex(width*0.1, height*0.65, // C
-              width*0.12, height*0.65,
-              width*0.15, height*0.7); // D
-  bezierVertex(width*0.15, height*0.7, // D
-              width*0.22, height*0.72, // E
-              width*0.22, height*0.77); // F
-  vertex(0, height*0.77); // G
+  vertex(posCar, height*0.7); // A
+  vertex(posCar+width*0.05, height*0.7); // B
+  bezierVertex(posCar+width*0.05, height*0.7, // B
+              posCar+width*0.07, height*0.65,
+              posCar+width*0.1, height*0.65); // C
+  bezierVertex(posCar+width*0.1, height*0.65, // C
+              posCar+width*0.12, height*0.65,
+              posCar+width*0.15, height*0.7); // D
+  bezierVertex(posCar+width*0.15, height*0.7, // D
+              posCar+width*0.22, height*0.72, // E
+              posCar+width*0.22, height*0.77); // F
+  vertex(posCar, height*0.77); // G
 
   endShape();
 
@@ -490,14 +504,14 @@ function cars() {
   fill('#92caf4');
   beginShape();
 
-  vertex(width*0.06, height*0.7);
-  bezierVertex(width*0.06, height*0.7,
-              width*0.08, height*0.66,
-              width*0.095, height*0.66);
-  bezierVertex(width*0.095, height*0.66,
-              width*0.11, height*0.65,
-              width*0.14, height*0.7);
-  vertex(width*0.06, height*0.7);
+  vertex(posCar+width*0.06, height*0.7);
+  bezierVertex(posCar+width*0.06, height*0.7,
+              posCar+width*0.08, height*0.66,
+              posCar+width*0.095, height*0.66);
+  bezierVertex(posCar+width*0.095, height*0.66,
+              posCar+width*0.11, height*0.65,
+              posCar+width*0.14, height*0.7);
+  vertex(posCar+width*0.06, height*0.7);
 
   endShape();
 
@@ -507,7 +521,7 @@ function cars() {
   noStroke();
 
   fill('#f7da00');
-  ellipse(width*0.22-headlightW, height*0.72+headlightW/2, // = ao ponto E
+  ellipse(posCar+width*0.22-headlightW, height*0.72+headlightW/2, // = ao ponto E
           headlightW, headlightW);
 
   
@@ -517,9 +531,9 @@ function cars() {
   strokeWeight(5);
 
   fill('#333');
-  ellipse(width*0.05, height*0.77, // pnéu esquerdo
+  ellipse(posCar+width*0.05, height*0.77, // pnéu esquerdo
           tirestW, tirestW);
-  ellipse(width*0.15, height*0.77, // pnéu direito
+  ellipse(posCar+width*0.15, height*0.77, // pnéu direito
           tirestW, tirestW);
 }
 
