@@ -14,10 +14,20 @@ document.querySelector('#btnTime').addEventListener('click', e => {
   if (dayTime) {
     document.querySelector('#wTxt').innerHTML = 'Daytime 🌞';
     scenarioColors.activeTime = scenarioColors.nightTime;
+
+    for (const building of buildingColors) {
+      building.active = building.nighttime
+    }
+
     dayTime = false;
   } else {
     document.querySelector('#wTxt').innerHTML = 'Nighttime 🌙';
     scenarioColors.activeTime = scenarioColors.dayTime;
+
+    for (const building of buildingColors) {
+      building.active = building.daylight
+    }
+
     dayTime = true;
   }
 })
@@ -38,40 +48,60 @@ function setup() {
 
 let buildingColors = [
   { //* 1 */
-    daylight: {
+    active: {
       building: '#808080',
       windows: '#373b4f',
       details: '#231b0e',
     },
+    daylight: {
+      building: '#5b5b5b',
+      windows: '#373b4f',
+      details: '#231b0e',
+    },
     nighttime: {
-     building: '#',
-     windows: '#',
-     details: '#',
+      building: '#808080',
+      windows: '#1f2230',
+      details: '#14100a',
     }
   },
   { //* 2 */
+    active: {
+      building: '#b7b5a1',
+      windows: '#373b4f',
+      details: '#231b0e',
+    },
     daylight: {
       building: '#b7b5a1',
       windows: '#373b4f',
       details: '#231b0e',
     },
     nighttime: {
-     building: '#',
-     windows: '#',
-     details: '#',
+      building: '#757153',
+      windows: '#212433',
+      details: '#14100a',
     }
   },
   { //* 3 */
+    active: {
+      building: '#dddddd',
+      windows: '#434860',
+    },
     daylight: {
       building: '#dddddd',
       windows: '#434860',
     },
     nighttime: {
-     building: '#',
-     windows: '#',
+      building: '#7c7c7c',
+      windows: '#2f3344',
     }
   },
   { //* 4 */
+    active: {
+      building: '#dadce8',
+      building2: '#3d4366',
+      windows: '#3d4366',
+      details: '#000000',
+    },
     daylight: {
       building: '#dadce8',
       building2: '#3d4366',
@@ -79,10 +109,10 @@ let buildingColors = [
       details: '#000000',
     },
     nighttime: {
-      building: '#',
-      building2: '#',
-      windows: '#',
-      details: '#',
+      building: '#888b9b',
+      building2: '#3e404f',
+      windows: '#3e404f',
+      details: '#000000',
     }
   },
 ]
@@ -91,26 +121,26 @@ let scenarioColors = {
   activeTime: {
     sky: '#68c0d6',
     road: '#606060',
+    roadLines: '#fff',
     wallExterior: '#424135',
     wallInterior: '#293326',
     wallFloor: '#38372d',
-    rail: '#373a37',
   },
   dayTime: {
     sky: '#68c0d6',
     road: '#606060',
+    roadLines: '#fff',
     wallExterior: '#424135',
     wallInterior: '#293326',
     wallFloor: '#38372d',
-    rail: '#373a37',
   },
   nightTime: {
     sky: '#1e212d',
-    road: '#606060',
-    wallExterior: '#424135',
-    wallInterior: '#293326',
-    wallFloor: '#38372d',
-    rail: '#373a37',
+    road: '#333',
+    roadLines: '#888',
+    wallExterior: '#2b2a27',
+    wallInterior: '#161c14',
+    wallFloor: '#23231d',
   },
 }
 
@@ -228,7 +258,7 @@ function wall() {
   noStroke();
 
   //* "Chão" do muro */
-  fill('#38372d');
+  fill(scenarioColors.activeTime.wallFloor);
   beginShape();
 
   vertex(0, height*0.645);
@@ -243,7 +273,7 @@ function wall() {
     pos = (i * width) / 5 + posWall;
       
     //* "Moldura" do muro */
-    fill('#424135');
+    fill(scenarioColors.activeTime.wallExterior);
     beginShape();
 
     vertex(pos, height*0.45); // 
@@ -259,7 +289,7 @@ function wall() {
 
 
     //* Interior do muro */  
-    fill('#293326');
+    fill(scenarioColors.activeTime.wallInterior);
     beginShape();
 
     vertex(pos, height*0.48);
@@ -289,20 +319,20 @@ function building4() {
 
   //* Prédio */
   strokeWeight(4);
-  stroke('#3d4366');
-  fill('#dadce8');
+  stroke(buildingColors[3].active.building2);
+  fill(buildingColors[3].active.building);
   rect(posB4, posY,
       buildingWidth, buildingHeight);
 
   //* Parte do meio */
   noStroke();
-  fill('#3d4366');
+  fill(buildingColors[3].active.windows);
   rect(posB4+buildingWidth/2-(buildingWidth/4)/2, posY*0.8,
       buildingWidth/4, buildingHeight);
 
   //* Janelas */
   strokeWeight(1);
-  stroke('#000');
+  stroke(buildingColors[3].active.details);
   drawWindows(posB4, posY*1.2, buildingWidth*0.12, buildingHeight*0.1, 4, 2, buildingWidth);
   function drawWindows(posX, y, wW, wH, nbrFloors, nbrWindows, buildingWidth) {
     //* "for" para cada linha de janelas */
@@ -339,12 +369,12 @@ function building3() {
   }
 
   //* Prédio */
-  fill('#dddddd');
+  fill(buildingColors[2].active.building);
   rect(posB3, 0,
       buildingWidth, buildingHeight);
 
   //* Janelas */
-  fill('#434860');
+  fill(buildingColors[2].active.windows);
 
   drawWindows(posB3, buildingHeight*0.15, buildingWidth*0.13, buildingHeight*0.9, 4);
   function drawWindows(posX, y, wW, wH, nbrWindows) {
@@ -374,14 +404,14 @@ function building2() {
   }
 
   //* Prédio */
-  fill('#b7b5a1');
+  fill(buildingColors[1].active.building);
   rect(posB2, 0,
       buildingWidth, buildingHeight);
 
   //* Janelas */
   strokeWeight(2);
-  stroke('#231b0e');
-  fill('#373b4f');
+  stroke(buildingColors[1].active.details);
+  fill(buildingColors[1].active.windows);
 
   drawWindows(posB2, buildingHeight*0.15, buildingWidth*0.1, buildingHeight*0.1, 5, 4);
   function drawWindows(posX, y, wW, wH, nbrFloors, nbrWindows) {
@@ -419,7 +449,7 @@ function building1() {
   }
 
   //* Telhado */
-  fill('#231b0e');
+  fill(buildingColors[0].active.details);
 
   beginShape();
 
@@ -447,8 +477,8 @@ function building1() {
   
   //* Janelas */
   strokeWeight(2);
-  stroke('#231b0e');
-  fill('#373b4f');
+  stroke(buildingColors[0].active.details);
+  fill(buildingColors[0].active.windows);
 
   drawWindows(posB1, posY*1.15, buildingWidth*0.1, buildingHeight*0.1, 4, 6);
   function drawWindows(posX, y, wW, wH, nbrFloors, nbrWindows) {
@@ -484,12 +514,12 @@ function roadDraw() {
   // Verifica se o retângulo branco original atingiu um terço da largura do canvas
   if (posRoad >= width / 3) {
     // Adiciona um novo retângulo branco
-    fill('#fff');
+    fill(scenarioColors.activeTime.roadLines);
     rect(posRoad - width, height*0.85, width * 0.2, height*0.02);
   }
 
   // Desenha o retângulo branco original
-  fill('#fff');
+  fill(scenarioColors.activeTime.roadLines);
   rect(posRoad, height*0.85, width * 0.2, height*0.02);
 
   // Verifica se o retângulo original saiu completamente do canvas
