@@ -130,16 +130,16 @@ let speedWall = (window.innerWidth*0.8)/35;
 let posWall = 0;
 
 let speedB1 = (window.innerWidth * 0.8) / 100;
-let posB1 = -(window.innerWidth * 0.8)*0.3;
+let posB1 = -(window.innerWidth * 0.8)*0.3 * (Math.floor(Math.random() * 3));
 
 let speedB2 = (window.innerWidth * 0.8) / 130;
-let posB2 = -(window.innerWidth * 0.8)*0.15;
+let posB2 = -(window.innerWidth * 0.8)*0.15 * (Math.floor(Math.random() * 3));
 
 let speedB3 = (window.innerWidth * 0.8) / 180;
-let posB3 = -(window.innerWidth * 0.8)*0.2;
+let posB3 = -(window.innerWidth * 0.8)*0.2 * (Math.floor(Math.random() * 3));
 
 let speedB4 = (window.innerWidth * 0.8) / 150;
-let posB4 = -(window.innerWidth * 0.8)*0.15;
+let posB4 = -(window.innerWidth * 0.8)*0.15 * (Math.floor(Math.random() * 3));
 
 let nbrBuildings = 0;
 let buildingsArray = [];
@@ -174,28 +174,32 @@ function draw() {
   clear();
   background(scenarioColors.activeTime.sky);
 
-  if (nbrBuildings == 0) {
-    nbrBuildings = Math.floor(Math.random() * (totalBuildingsArray.length - 2)) + 2 /* (max - min) + min */
+  // if (nbrBuildings == 0) {
+  //   nbrBuildings = Math.floor(Math.random() * (totalBuildingsArray.length - 2)) + 2 /* (max - min) + min */
 
-                        /* número de prédios a tirar do array */
-    for (let i = 0; i < (totalBuildingsArray.length - nbrBuildings); i++) {
-      let radBuilding = Math.floor(Math.random() * totalBuildingsArray.length);
-      buildingsArray = totalBuildingsArray.filter(b => b.building != totalBuildingsArray[radBuilding].building)
-    }
-  }
-  else {
-    for (const bd of buildingsArray) {
-      if (bd.pos < width + bd.width) {
-        drawBuilding(bd);
-      }
-      else {
-        nbrBuildings -= 1;
-        buildingsArray = buildingsArray.filter(b => b.building != bd.building)
-        bd.pos = -width - bd.width /** -bd.width */
-      }
-    }
-  }
+  //                       /* número de prédios a tirar do array */
+  //   for (let i = 0; i < (totalBuildingsArray.length - nbrBuildings); i++) {
+  //     let radBuilding = Math.floor(Math.random() * totalBuildingsArray.length);
+  //     buildingsArray = totalBuildingsArray.filter(b => b.building != totalBuildingsArray[radBuilding].building)
+  //   }
+  // }
+  // else {
+  //   for (const bd of buildingsArray) {
+  //     if (bd.pos < width + bd.width) {
+  //       drawBuilding(bd);
+  //     }
+  //     else {
+  //       nbrBuildings -= 1;
+  //       buildingsArray = buildingsArray.filter(b => b.building != bd.building)
+  //       bd.pos = -width - bd.width /** -bd.width */
+  //     }
+  //   }
+  // }
 
+  building3();
+  building2();
+  building4();
+  building1();
   wall();
   roadDraw();
   cars();
@@ -204,21 +208,21 @@ function draw() {
   frameRate(15);
 }
 
-function drawBuilding(bd) {
-  if (bd.building == "building3") {
-    bd.pos += bd.speed;
-    building3(bd.pos);
-  } else if (bd.building == "building2") {
-    bd.pos += bd.speed;
-    building2(bd.pos);
-  } else if (bd.building == "building4") {
-    bd.pos += bd.speed;
-    building4(bd.pos);
-  } else if (bd.building == "building1") {
-    bd.pos += bd.speed;
-    building1(bd.pos);
-  }
-}
+// function drawBuilding(bd) {
+//   if (bd.building == "building3") {
+//     bd.pos += bd.speed;
+//     building3(bd.pos);
+//   } else if (bd.building == "building2") {
+//     bd.pos += bd.speed;
+//     building2(bd.pos);
+//   } else if (bd.building == "building4") {
+//     bd.pos += bd.speed;
+//     building4(bd.pos);
+//   } else if (bd.building == "building1") {
+//     bd.pos += bd.speed;
+//     building1(bd.pos);
+//   }
+// }
 
 function wall() {
   noStroke();
@@ -273,10 +277,15 @@ function wall() {
   }
 }
 
-function building4(posB4) {
+function building4() {
   let posY = height*0.15;
   let buildingWidth = width*0.15;
   let buildingHeight = width*0.2;
+
+  posB4 += speedB4;
+  if (posB4 > width+buildingWidth) {
+    posB4 = -width-buildingWidth*(Math.floor(Math.random() * 3)) //nº random dá ilusão de tempo aleatório entre cada aparição
+  }
 
   //* Prédio */
   strokeWeight(4);
@@ -318,11 +327,16 @@ function building4(posB4) {
   }
 }
 
-function building3(posB3) {
+function building3() {
   noStroke();
 
   let buildingWidth = width*0.2;
   let buildingHeight = width*0.3;
+
+  posB3 += speedB3;
+  if (posB3 > width+buildingWidth) {
+    posB3 = -width-buildingWidth*(Math.floor(Math.random() * 3)) //nº random dá ilusão de tempo aleatório entre cada aparição
+  }
 
   //* Prédio */
   fill('#dddddd');
@@ -348,11 +362,16 @@ function building3(posB3) {
   }
 }
 
-function building2(posB2) {
+function building2() {
   noStroke();
 
   let buildingWidth = width*0.15;
   let buildingHeight = width*0.3;
+
+  posB2 += speedB2;
+  if (posB2 > width+buildingWidth) {
+    posB2 = -width-buildingWidth*(Math.floor(Math.random() * 3)) //nº random dá ilusão de tempo aleatório entre cada aparição
+  }
 
   //* Prédio */
   fill('#b7b5a1');
@@ -387,19 +406,17 @@ function building2(posB2) {
   }
 }
 
-function building1(posB1) {
+function building1() {
   noStroke();
-
-  //* Faz o prédio mexer ou parar */
-  // if (posB1 < width) {
-  //   posB1 = frameCount * speedB1;  
-  // }
-  
-  // let posX = 0;
 
   let posY = height*0.2;
   let buildingWidth = width*0.3;
   let buildingHeight = width*0.2;
+
+  posB1 += speedB1;
+  if (posB1 > width+buildingWidth) {
+    posB1 = -width-buildingWidth*(Math.floor(Math.random() * 3)) //nº random dá ilusão de tempo aleatório entre cada aparição
+  }
 
   //* Telhado */
   fill('#231b0e');
