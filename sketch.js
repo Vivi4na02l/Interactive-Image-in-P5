@@ -54,12 +54,12 @@ let buildingColors = [
       details: '#231b0e',
     },
     daylight: {
-      building: '#5b5b5b',
+      building: '#808080',
       windows: '#373b4f',
       details: '#231b0e',
     },
     nighttime: {
-      building: '#808080',
+      building: '#3a3a3a',
       windows: '#1f2230',
       details: '#14100a',
     }
@@ -76,7 +76,7 @@ let buildingColors = [
       details: '#231b0e',
     },
     nighttime: {
-      building: '#757153',
+      building: '#4f4d41',
       windows: '#212433',
       details: '#14100a',
     }
@@ -91,7 +91,7 @@ let buildingColors = [
       windows: '#434860',
     },
     nighttime: {
-      building: '#7c7c7c',
+      building: '#595959',
       windows: '#2f3344',
     }
   },
@@ -109,9 +109,9 @@ let buildingColors = [
       details: '#000000',
     },
     nighttime: {
-      building: '#888b9b',
-      building2: '#3e404f',
-      windows: '#3e404f',
+      building: '#646772',
+      building2: '#2b2e3f',
+      windows: '#2b2e3f',
       details: '#000000',
     }
   },
@@ -470,7 +470,7 @@ function building1() {
 
 
   //* Prédio */
-  fill('#808080');
+  fill(buildingColors[0].active.building);
   rect(posB1, posY,
       buildingWidth, buildingHeight);
 
@@ -531,9 +531,15 @@ function roadDraw() {
 function cars() {
   posCar += speedCar;
   if (posCar > width+(width*0.22)) {
-    rCar = random(255);
-    gCar = random(255);
-    bCar = random(255);
+    if (dayTime) {
+      rCar = random(255);
+      gCar = random(255);
+      bCar = random(255); 
+    } else {
+      rCar = random(70);
+      gCar = random(60);
+      bCar = random(100);
+    }
     posCar = -width*(Math.floor(Math.random() * 15) + 4) //nº random dá ilusão de tempo aleatório entre a aparição de cada carro
   }
 
