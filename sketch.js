@@ -58,7 +58,8 @@ let buildingColors = [
       building: '#3a3a3a',
       windows: '#1f2230',
       details: '#14100a',
-    }
+    },
+    lightOnWindows: []
   },
   { //* 2 */
     active: {
@@ -75,7 +76,8 @@ let buildingColors = [
       building: '#444339',
       windows: '#212433',
       details: '#14100a',
-    }
+    },
+    lightOnWindows: []
   },
   { //* 3 */
     active: {
@@ -89,7 +91,8 @@ let buildingColors = [
     nighttime: {
       building: '#3f3f3f',
       windows: '#1f212b',
-    }
+    },
+    lightOnWindows: []
   },
   { //* 4 */
     active: {
@@ -109,7 +112,8 @@ let buildingColors = [
       building2: '#1f212b',
       windows: '#1f212b',
       details: '#000000',
-    }
+    },
+    lightOnWindows: []
   },
 ]
 
@@ -166,36 +170,7 @@ let posB3 = -(window.innerWidth * 0.8)*0.2 * (Math.floor(Math.random() * 3));
 
 let speedB4 = (window.innerWidth * 0.8) / 150;
 let posB4 = -(window.innerWidth * 0.8)*0.15 * (Math.floor(Math.random() * 3));
-let lightOnWindowsB4 = [];
 
-let nbrBuildings = 0;
-let buildingsArray = [];
-let totalBuildingsArray = [
-  {
-    building: "building3",
-    width: (window.innerWidth * 0.8)*0.2,
-    pos: posB3,
-    speed: speedB3
-  },
-  {
-    building: "building2",
-    width: (window.innerWidth * 0.8)*0.15,
-    pos: posB2,
-    speed: speedB2
-  },
-  {
-    building: "building4",
-    width: (window.innerWidth * 0.8)*0.15,
-    pos: posB4,
-    speed: speedB4
-  },
-  {
-    building: "building1",
-    width: (window.innerWidth * 0.8)*0.3,
-    pos: posB1,
-    speed: speedB1
-  },
-];
 
 function draw() {
   clear();
@@ -266,18 +241,22 @@ function wall() {
   }
 }
 
-function windowsWithLightsOn(nbrFloors, nbrWindows) {
-  lightOnWindowsB4 = [];
+function windowsWithLightsOn(building, nbrFloors, nbrWindows, percentage) {
+  buildingColors[building-1].lightOnWindows = []
 
   //* Escolhe aleatoriamente as janelas que, neste ciclo, estarão ligadas de noite */
   if (!dayTime) {
     for (let i = 0; i < (nbrWindows*nbrFloors); i++) {
-      if (random(10) < 7) { // 70% chance da janela estar "desligada de noite"
-        lightOnWindowsB4.push(false); // "false simboliza janela desligada"
-      } else { // 30% chance da janela estar "ligada de noite"
-        lightOnWindowsB4.push(true); // "true" simboliza janela ligada
+      if (random(20) < percentage) { // chance da janela estar "desligada de noite"
+        buildingColors[building-1].lightOnWindows.push(false); // "false simboliza janela desligada"
+      } else { // chance da janela estar "ligada de noite"
+        buildingColors[building-1].lightOnWindows.push(true); // "true" simboliza janela ligada
       }
     }
+  }
+
+  if (building == 1) {
+    nightTriggered = false;
   }
 }
 
@@ -293,13 +272,11 @@ function building4() {
   if (posB4 > width+buildingWidth) {
     posB4 = -width-buildingWidth*(Math.floor(Math.random() * 3)) //nº random dá ilusão de tempo aleatório entre cada aparição
 
-    windowsWithLightsOn(nbrFloors, nbrWindows);
+    windowsWithLightsOn(4, nbrFloors, nbrWindows, 15);
   }
 
   if (nightTriggered) {
-    nightTriggered = false;
-
-    windowsWithLightsOn(nbrFloors, nbrWindows);
+    windowsWithLightsOn(4, nbrFloors, nbrWindows, 15);
   }
 
   //* Prédio */
@@ -339,7 +316,7 @@ function building4() {
           x += buildingWidth*0.62 // define a distância horizontal entre as janelas
         }
 
-        if (!dayTime && lightOnWindowsB4[countWindow-1]) {
+        if (!dayTime && buildingColors[4-1].lightOnWindows[countWindow-1]) {
           fill('#d1be49');
         } else {
           fill(buildingColors[3].active.windows);
@@ -358,9 +335,19 @@ function building3() {
   let buildingWidth = width*0.2;
   let buildingHeight = width*0.3;
 
+  let nbrFloors = 4;
+  let nbrWindows = 6;
+  let countWindow = 0;
+
+  if (nightTriggered) {
+    windowsWithLightsOn(3, nbrFloors, nbrWindows, 18);
+  }
+
   posB3 += speedB3;
   if (posB3 > width+buildingWidth) {
     posB3 = -width-buildingWidth*(Math.floor(Math.random() * 3)) //nº random dá ilusão de tempo aleatório entre cada aparição
+
+    windowsWithLightsOn(3, nbrFloors, nbrWindows, 19);
   }
 
   //* Prédio */
@@ -371,18 +358,34 @@ function building3() {
   //* Janelas */
   fill(buildingColors[2].active.windows);
 
-  drawWindows(posB3, buildingHeight*0.15, buildingWidth*0.13, buildingHeight*0.9, 4);
-  function drawWindows(posX, y, wW, wH, nbrWindows) {
+  drawWindows(posB3, buildingHeight*0.15, buildingWidth*0.13, buildingHeight*0.1, 8, 4);
+  function drawWindows(posX, y, wW, wH, nbrFloors, nbrWindows) {
   //* "for" para cada janela individual */
-    for (let j = 0; j < nbrWindows; j++) {
-      if (j == 0) {
-        x = posX + wW*0.2 // reseta a distância inicial por cada loop de "j"
-        x += wW*0.5 // define a distância inicial da janela à borda do prédio
-      } else {
-        x += wW + wW*0.7 // define a distância horizontal entre as janelas
+    for (let i = 0; i < nbrFloors; i++) {
+
+      if (i != 0) {
+        y += wH*0.9 // define a distância vertical entre as janelas
       }
 
-      rect(x, y, wW, wH);
+      //* "for" para cada janela individual */
+      for (let j = 0; j < nbrWindows; j++) {
+        countWindow += 1;
+
+        if (j == 0) {
+          x = posX + wW*0.2 // reseta a distância inicial por cada loop de "j"
+          x += wW*0.5 // define a distância inicial da janela à borda do prédio
+        } else {
+          x += wW + wW*0.7 // define a distância horizontal entre as janelas
+        }
+
+        if (!dayTime && buildingColors[3-1].lightOnWindows[countWindow-1]) {
+          fill('#93822d');
+        } else {
+          fill(buildingColors[3-1].active.windows);
+        }
+
+        rect(x, y, wW, wH);
+      }
     }
   }
 }
@@ -393,9 +396,19 @@ function building2() {
   let buildingWidth = width*0.15;
   let buildingHeight = width*0.3;
 
+  let nbrFloors = 5;
+  let nbrWindows = 4;
+  let countWindow = 0;
+
+  if (nightTriggered) {
+    windowsWithLightsOn(2, nbrFloors, nbrWindows, 15);
+  }
+
   posB2 += speedB2;
   if (posB2 > width+buildingWidth) {
     posB2 = -width-buildingWidth*(Math.floor(Math.random() * 3)) //nº random dá ilusão de tempo aleatório entre cada aparição
+    
+    windowsWithLightsOn(2, nbrFloors, nbrWindows, 15);
   }
 
   //* Prédio */
@@ -418,11 +431,19 @@ function building2() {
 
       //* "for" para cada janela individual */
       for (let j = 0; j < nbrWindows; j++) {
+        countWindow += 1;
+
         if (j == 0) {
           x = posX + wW*0.2 // reseta a distância inicial por cada loop de "j"
           x += wW*0.6 // define a distância inicial da janela à borda do prédio
         } else {
           x += wW + wH*0.7 // define a distância horizontal entre as janelas
+        }
+
+        if (!dayTime && buildingColors[2-1].lightOnWindows[countWindow-1]) {
+          fill('#d1be49');
+        } else {
+          fill(buildingColors[2-1].active.windows);
         }
 
         rect(x, y, wW, wH);
@@ -438,9 +459,19 @@ function building1() {
   let buildingWidth = width*0.3;
   let buildingHeight = width*0.2;
 
+  let nbrFloors = 4;
+  let nbrWindows = 6;
+  let countWindow = 0;
+
+  if (nightTriggered) {
+    windowsWithLightsOn(1, nbrFloors, nbrWindows, 15);
+  }
+
   posB1 += speedB1;
   if (posB1 > width+buildingWidth) {
     posB1 = -width-buildingWidth*(Math.floor(Math.random() * 3)) //nº random dá ilusão de tempo aleatório entre cada aparição
+
+    windowsWithLightsOn(1, nbrFloors, nbrWindows, 15);
   }
 
   //* Telhado */
@@ -485,11 +516,19 @@ function building1() {
 
       //* "for" para cada janela individual */
       for (let j = 0; j < nbrWindows; j++) {
+        countWindow += 1;
+
         if (j == 0) {
           x = posX + wW*0.2 // reseta a distância inicial por cada loop de "j"
           x += wW*0.3 // define a distância inicial da janela à borda do prédio
         } else {
           x += wW + wH*0.9 // define a distância horizontal entre as janelas
+        }
+
+        if (!dayTime && buildingColors[1-1].lightOnWindows[countWindow-1]) {
+          fill('#d1be49');
+        } else {
+          fill(buildingColors[1-1].active.windows);
         }
 
         rect(x, y, wW, wH);
