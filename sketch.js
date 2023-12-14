@@ -10,7 +10,10 @@ function body() {
 }
 
 let dayTime = true;
+let nightTriggered = false;
 document.querySelector('#btnTime').addEventListener('click', e => {
+  nightTriggered = true;
+
   if (dayTime) {
     document.querySelector('#wTxt').innerHTML = 'Daytime 🌞';
     scenarioColors.activeTime = scenarioColors.nightTime;
@@ -263,6 +266,21 @@ function wall() {
   }
 }
 
+function windowsWithLightsOn(nbrFloors, nbrWindows) {
+  lightOnWindowsB4 = [];
+
+  //* Escolhe aleatoriamente as janelas que, neste ciclo, estarão ligadas de noite */
+  if (!dayTime) {
+    for (let i = 0; i < (nbrWindows*nbrFloors); i++) {
+      if (random(10) < 7) { // 70% chance da janela estar "desligada de noite"
+        lightOnWindowsB4.push(false); // "false simboliza janela desligada"
+      } else { // 30% chance da janela estar "ligada de noite"
+        lightOnWindowsB4.push(true); // "true" simboliza janela ligada
+      }
+    }
+  }
+}
+
 function building4() {
   let posY = height*0.15;
   let buildingWidth = width*0.15;
@@ -275,18 +293,13 @@ function building4() {
   if (posB4 > width+buildingWidth) {
     posB4 = -width-buildingWidth*(Math.floor(Math.random() * 3)) //nº random dá ilusão de tempo aleatório entre cada aparição
 
-    //* Escolhe aleatoriamente as janelas que, neste ciclo, estarão ligadas de noite */
-    if (!dayTime) {
-      for (let i = 0; i < (nbrWindows*nbrFloors); i++) {
-        if (random(10) < 7) { // 70% chance da janela estar "desligada de noite"
-          lightOnWindowsB4.push(false); // "false simboliza janela desligada"
-        } else { // 30% chance da janela estar "ligada de noite"
-          lightOnWindowsB4.push(true); // "true" simboliza janela ligada
-        }
-      }
+    windowsWithLightsOn(nbrFloors, nbrWindows);
+  }
 
-      console.log(lightOnWindowsB4);
-    }
+  if (nightTriggered) {
+    nightTriggered = false;
+
+    windowsWithLightsOn(nbrFloors, nbrWindows);
   }
 
   //* Prédio */
