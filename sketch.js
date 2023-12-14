@@ -32,19 +32,12 @@ document.querySelector('#btnTime').addEventListener('click', e => {
   }
 })
 
-// window.addEventListener("resize", changedWindowSize)
-
 function setup() {
   let canvasW = window.innerWidth*0.8
   let canvasH = (window.innerWidth*0.8)/1.7777
   let canvas = createCanvas(canvasW, canvasH);
   canvas.parent("divBackground");
 }
-
-//* Variáveis */
-// let nbrBuildings = [1,2,3,4];
-// let randomBuilding = Math.floor(Math.random() * nbrBuildings.length) + 1;
-// nbrBuildings = nbrBuildings.filter(nbr => nbr != randomBuilding);
 
 let buildingColors = [
   { //* 1 */
@@ -170,6 +163,7 @@ let posB3 = -(window.innerWidth * 0.8)*0.2 * (Math.floor(Math.random() * 3));
 
 let speedB4 = (window.innerWidth * 0.8) / 150;
 let posB4 = -(window.innerWidth * 0.8)*0.15 * (Math.floor(Math.random() * 3));
+let lightOnWindowsB4 = [];
 
 let nbrBuildings = 0;
 let buildingsArray = [];
@@ -273,10 +267,26 @@ function building4() {
   let posY = height*0.15;
   let buildingWidth = width*0.15;
   let buildingHeight = width*0.2;
+  let nbrFloors = 4;
+  let nbrWindows = 2;
+  let countWindow = 0;
 
   posB4 += speedB4;
   if (posB4 > width+buildingWidth) {
     posB4 = -width-buildingWidth*(Math.floor(Math.random() * 3)) //nº random dá ilusão de tempo aleatório entre cada aparição
+
+    //* Escolhe aleatoriamente as janelas que, neste ciclo, estarão ligadas de noite */
+    if (!dayTime) {
+      for (let i = 0; i < (nbrWindows*nbrFloors); i++) {
+        if (random(10) < 7) { // 70% chance da janela estar "desligada de noite"
+          lightOnWindowsB4.push(false); // "false simboliza janela desligada"
+        } else { // 30% chance da janela estar "ligada de noite"
+          lightOnWindowsB4.push(true); // "true" simboliza janela ligada
+        }
+      }
+
+      console.log(lightOnWindowsB4);
+    }
   }
 
   //* Prédio */
@@ -295,21 +305,31 @@ function building4() {
   //* Janelas */
   strokeWeight(1);
   stroke(buildingColors[3].active.details);
-  drawWindows(posB4, posY*1.2, buildingWidth*0.12, buildingHeight*0.1, 4, 2, buildingWidth);
+  drawWindows(posB4, posY*1.2, buildingWidth*0.12, buildingHeight*0.1, nbrFloors, nbrWindows, buildingWidth);
   function drawWindows(posX, y, wW, wH, nbrFloors, nbrWindows, buildingWidth) {
+
     //* "for" para cada linha de janelas */
     for (let i = 0; i < nbrFloors; i++) {
+
       if (i != 0) {
         y += wH + wH*1.1 // define a distância vertical entre as janelas
       }
 
       //* "for" para cada janela individual */
       for (let j = 0; j < nbrWindows; j++) {
+        countWindow += 1;
+
         if (j == 0) {
           x = posX + wW*0.2 // reseta a distância inicial por cada loop de "j"
           x += buildingWidth*0.05 // define a distância inicial da janela à borda do prédio
         } else {
           x += buildingWidth*0.62 // define a distância horizontal entre as janelas
+        }
+
+        if (!dayTime && lightOnWindowsB4[countWindow-1]) {
+          fill('#d1be49');
+        } else {
+          fill(buildingColors[3].active.windows);
         }
 
         rect(x, y, wW, wH);
