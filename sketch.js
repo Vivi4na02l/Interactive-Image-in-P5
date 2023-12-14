@@ -600,9 +600,15 @@ function cars() {
 
 
   //* Vidro */
-  stroke('#77a8ce');
-  
-  fill('#92caf4');
+
+  if (dayTime) {  
+    stroke('#77a8ce');
+    fill('#92caf4'); 
+  } else {
+    stroke('#121a21');
+    fill('#21313d');
+  }
+
   beginShape();
 
   vertex(posCar+width*0.06, height*0.7);
