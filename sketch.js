@@ -204,28 +204,6 @@ function draw() {
   clear();
   background(scenarioColors.activeTime.sky);
 
-  // if (nbrBuildings == 0) {
-  //   nbrBuildings = Math.floor(Math.random() * (totalBuildingsArray.length - 2)) + 2 /* (max - min) + min */
-
-  //                       /* número de prédios a tirar do array */
-  //   for (let i = 0; i < (totalBuildingsArray.length - nbrBuildings); i++) {
-  //     let radBuilding = Math.floor(Math.random() * totalBuildingsArray.length);
-  //     buildingsArray = totalBuildingsArray.filter(b => b.building != totalBuildingsArray[radBuilding].building)
-  //   }
-  // }
-  // else {
-  //   for (const bd of buildingsArray) {
-  //     if (bd.pos < width + bd.width) {
-  //       drawBuilding(bd);
-  //     }
-  //     else {
-  //       nbrBuildings -= 1;
-  //       buildingsArray = buildingsArray.filter(b => b.building != bd.building)
-  //       bd.pos = -width - bd.width /** -bd.width */
-  //     }
-  //   }
-  // }
-
   building3();
   building2();
   building4();
@@ -237,22 +215,6 @@ function draw() {
 
   frameRate(15);
 }
-
-// function drawBuilding(bd) {
-//   if (bd.building == "building3") {
-//     bd.pos += bd.speed;
-//     building3(bd.pos);
-//   } else if (bd.building == "building2") {
-//     bd.pos += bd.speed;
-//     building2(bd.pos);
-//   } else if (bd.building == "building4") {
-//     bd.pos += bd.speed;
-//     building4(bd.pos);
-//   } else if (bd.building == "building1") {
-//     bd.pos += bd.speed;
-//     building1(bd.pos);
-//   }
-// }
 
 function wall() {
   noStroke();
