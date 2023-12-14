@@ -76,7 +76,7 @@ let buildingColors = [
       details: '#231b0e',
     },
     nighttime: {
-      building: '#4f4d41',
+      building: '#444339',
       windows: '#212433',
       details: '#14100a',
     }
@@ -91,8 +91,8 @@ let buildingColors = [
       windows: '#434860',
     },
     nighttime: {
-      building: '#595959',
-      windows: '#2f3344',
+      building: '#3f3f3f',
+      windows: '#1f212b',
     }
   },
   { //* 4 */
@@ -109,9 +109,9 @@ let buildingColors = [
       details: '#000000',
     },
     nighttime: {
-      building: '#646772',
-      building2: '#2b2e3f',
-      windows: '#2b2e3f',
+      building: '#404247',
+      building2: '#1f212b',
+      windows: '#1f212b',
       details: '#000000',
     }
   },
@@ -135,9 +135,9 @@ let scenarioColors = {
     wallFloor: '#38372d',
   },
   nightTime: {
-    sky: '#1e212d',
+    sky: '#141721',
     road: '#333',
-    roadLines: '#888',
+    roadLines: '#595959',
     wallExterior: '#2b2a27',
     wallInterior: '#161c14',
     wallFloor: '#23231d',
