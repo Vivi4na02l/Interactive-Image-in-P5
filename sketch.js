@@ -599,8 +599,7 @@ function cars() {
   endShape();
 
 
-  //* Vidro */
-
+  //* Janela */
   if (dayTime) {  
     stroke('#77a8ce');
     fill('#92caf4'); 
@@ -630,6 +629,22 @@ function cars() {
   fill('#f7da00');
   ellipse(posCar+width*0.22-headlightW, height*0.72+headlightW/2, // = ao ponto E
           headlightW, headlightW);
+
+  if (!dayTime) {  
+    fill(247, 218, 0, 60);
+    beginShape();
+    vertex(posCar+width*0.22-headlightW, height*0.72);
+    bezierVertex(posCar+width*0.22-headlightW, height*0.72,
+                posCar+width*0.25, height*0.70,
+                posCar+width*0.33, height*0.69);
+    bezierVertex(posCar+width*0.33, height*0.69,
+                posCar+width*0.36, height*0.71+headlightW,
+                posCar+width*0.33, height*0.72+headlightW*2)
+    bezierVertex(posCar+width*0.33, height*0.72+headlightW*2,
+                posCar+width*0.25, height*0.71+headlightW*2,
+                posCar+width*0.22-headlightW, height*0.72+headlightW)
+    endShape();
+  }
 
   
   //* Pnéus */
