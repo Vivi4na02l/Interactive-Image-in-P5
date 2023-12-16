@@ -3,10 +3,7 @@ function body() {
   let H = window.innerHeight
 
   let divBackground = document.querySelector('#divBackground')
-  divBackground.style.height = H * 0.85 + 'px'
-
-  // let divButtons = document.querySelector('#divButtons')
-  // divButtons.style.height = H * 0.1 + 'px'
+  divBackground.style.height = H + 'px'
 }
 
 let dayTime = true;
