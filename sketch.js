@@ -32,6 +32,11 @@ document.querySelector('#btnTime').addEventListener('click', e => {
   }
 })
 
+let windowUp = true;
+document.querySelector('#btnWindow').addEventListener('click', e => {
+  windowUp = !windowUp;
+})
+
 function setup() {
   let canvasW = window.innerWidth*0.8
   let canvasH = (window.innerWidth*0.8)/1.7777
@@ -152,6 +157,9 @@ let posCar = -(window.innerWidth*0.8)*0.22;
 let rCar = Math.floor(Math.random() * 255);
 let gCar = Math.floor(Math.random() * 255);
 let bCar = Math.floor(Math.random() * 255);
+
+let posCarWindow = 0;
+let speedCarWindow = (window.innerWidth * 0.8) / 100;
 
 let speedWall = (window.innerWidth*0.8)/35;
 let posWall = 0;
@@ -658,6 +666,41 @@ function cars() {
 
 // função que desenha a forma da janela do carro
 function carDraw() {
+  noStroke();
+
+  //* Janela imóvel */
+  if (dayTime) {
+    fill(99, 126, 147, 120);
+  } else {
+    fill(60, 66, 86, 120);
+  }
+
+  beginShape();
+  vertex(width*0.75, height*0.12);
+  vertex(width, height*0.12);
+  vertex(width, height*0.9);
+  vertex(width*0.75, height*0.9);
+  endShape();
+
+
+  //* Janela móvel */
+  if (!windowUp && posCarWindow <= height*0.75) {
+    posCarWindow += 10; 
+  } else if (windowUp && posCarWindow != 0) {
+    posCarWindow -= 10; 
+  }
+
+
+  beginShape();
+  vertex(width*0, posCarWindow+height*0.05); // C
+  vertex(width*0.72, posCarWindow+height*0.11); // D
+  vertex(width*0.72, posCarWindow+height*0.9); // H
+  vertex(0, posCarWindow+height*0.9); // G
+  endShape();
+
+
+
+  //* Contorno preto */
   // Janela do carro
   stroke('#000');
   fill('#000'); // Cor da janela
