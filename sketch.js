@@ -684,7 +684,7 @@ function carDraw() {
 
 
   //* Janela móvel */
-  if (!windowUp && posCarWindow <= height*0.75) {
+  if (!windowUp && posCarWindow <= height*0.8) {
     posCarWindow += 10; 
   } else if (windowUp && posCarWindow != 0) {
     posCarWindow -= 10; 
@@ -693,6 +693,9 @@ function carDraw() {
 
   beginShape();
   vertex(width*0, posCarWindow+height*0.05); // C
+  bezierVertex(width*0, posCarWindow+height*0.05, // C
+              width*0.5, posCarWindow+height*0.06,
+              width*0.72, posCarWindow+height*0.11); // D
   vertex(width*0.72, posCarWindow+height*0.11); // D
   vertex(width*0.72, posCarWindow+height*0.9); // H
   vertex(0, posCarWindow+height*0.9); // G
