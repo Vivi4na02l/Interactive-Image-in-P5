@@ -275,7 +275,7 @@ function building4() {
 
   posB4 += speedB4;
   if (posB4 > width+buildingWidth) {
-    posB4 = -width-buildingWidth*(Math.floor(Math.random() * 3)) //nº random dá ilusão de tempo aleatório entre cada aparição
+    posB4 = -width-buildingWidth*random(0, 3) //nº random dá ilusão de tempo aleatório entre cada aparição
 
     windowsWithLightsOn(4, nbrFloors, nbrWindows, 15);
   }
@@ -350,7 +350,7 @@ function building3() {
 
   posB3 += speedB3;
   if (posB3 > width+buildingWidth) {
-    posB3 = -width-buildingWidth*(Math.floor(Math.random() * 3)) //nº random dá ilusão de tempo aleatório entre cada aparição
+    posB3 = -width-buildingWidth*random(0, 3) //nº random dá ilusão de tempo aleatório entre cada aparição
 
     windowsWithLightsOn(3, nbrFloors, nbrWindows, 19);
   }
@@ -411,7 +411,7 @@ function building2() {
 
   posB2 += speedB2;
   if (posB2 > width+buildingWidth) {
-    posB2 = -width-buildingWidth*(Math.floor(Math.random() * 3)) //nº random dá ilusão de tempo aleatório entre cada aparição
+    posB2 = -width-buildingWidth*random(0, 3) //nº random dá ilusão de tempo aleatório entre cada aparição
     
     windowsWithLightsOn(2, nbrFloors, nbrWindows, 15);
   }
@@ -474,7 +474,7 @@ function building1() {
 
   posB1 += speedB1;
   if (posB1 > width+buildingWidth) {
-    posB1 = -width-buildingWidth*(Math.floor(Math.random() * 3)) //nº random dá ilusão de tempo aleatório entre cada aparição
+    posB1 = -width-buildingWidth*random(0, 3) //nº random dá ilusão de tempo aleatório entre cada aparição
 
     windowsWithLightsOn(1, nbrFloors, nbrWindows, 15);
   }
@@ -579,7 +579,7 @@ function cars() {
       gCar = random(60);
       bCar = random(100);
     }
-    posCar = -width*(Math.floor(Math.random() * 15) + 4) //nº random dá ilusão de tempo aleatório entre a aparição de cada carro
+    posCar = -width*random(4, 20) //nº random dá ilusão de tempo aleatório entre a aparição de cada carro
   }
 
   noStroke();
