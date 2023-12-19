@@ -167,13 +167,13 @@ let posWall = 0;
 let speedB1 = (window.innerWidth * 0.8) / 100;
 let posB1 = -(window.innerWidth * 0.8)*0.3 * (Math.floor(Math.random() * 3));
 
-let speedB2 = (window.innerWidth * 0.8) / 130;
+let speedB2 = (window.innerWidth * 0.8) / 150;
 let posB2 = -(window.innerWidth * 0.8)*0.15 * (Math.floor(Math.random() * 3));
 
 let speedB3 = (window.innerWidth * 0.8) / 180;
 let posB3 = -(window.innerWidth * 0.8)*0.2 * (Math.floor(Math.random() * 3));
 
-let speedB4 = (window.innerWidth * 0.8) / 150;
+let speedB4 = (window.innerWidth * 0.8) / 130;
 let posB4 = -(window.innerWidth * 0.8)*0.15 * (Math.floor(Math.random() * 3));
 
 
